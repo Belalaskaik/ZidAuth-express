@@ -1,5 +1,5 @@
 {
-  "name": "zid-express-sample-app",
+  "name": "zid-minimal-sample",
   "version": "1.0.0",
   "main": "dist/server.js",
   "author": "Zid App Market ( ZAM )",
@@ -11,20 +11,10 @@
     "serve": "node dist/server.js",
     "start": "npm run build && npm run serve",
     "test": "jest",
-    "watch-ts": "tsc --watch",
-    "postinstall": "npm run build"
+    "watch-ts": "tsc --watch"
   },
-  "dependencies": {
-    "axios": "^1.2.4",
-    "compression": "^1.7.4",
-    "dotenv": "^16.3.1",
-    "express": "^4.17.1",
-    "helmet": "^4.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/compression": "^1.7.0",
-    "@types/express": "^4.17.9",
-    "@types/helmet": "^4.0.0",
     "@types/jest": "^26.0.19",
     "@types/node": "^14.14.14",
     "eslint": "^7.16.0",
