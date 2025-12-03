@@ -1,29 +1,31 @@
-# Express Sample To Use Zid APIs
+# Minimal Zid OAuth Sample (No Express)
 
-## OAuth.
-In Zid, we use authorization code grant, The authorization code grant type is used to obtain both access tokens and refresh tokens and is optimized for confidential clients. Since this is a redirection-based flow, the client must be capable of interacting with the resource owner's user-agent (typically a web browser) and capable of receiving incoming requests (via redirection) from the authorization server.
-<br>
-- ### Generate Client ID and Client Secret
-  The first step is to retrieve an API id and API secret key, which you get when you create an app. These API credentials identify your app during the authorization process.
+This project demonstrates a very small Zid OAuth flow using only Node's built-in `http` module. It keeps the code to just a couple of files while still showing how to redirect for authorization, handle the callback, and fetch merchant details.
 
-    1) Log in to your Partner Dashboard.
-    2) Click Apps.
-    3) Choose the type of app that you want to create.
-    4) Click Create app.
-    5) Enter your application basic details.
-    6) Click Create App.
-    7) Scroll to API Keys to view your API key and API secret key.
-    8) Store these keys in your .env file as `ZID_CLIENT_ID` and `ZID_CLIENT_SECRET`
+## Setup
+1. Install dependencies and compile the TypeScript source:
+   ```bash
+   npm install
+   npm run build
+   ```
+2. Set the required environment variables before starting the server:
+   - `ZID_AUTH_URL`
+   - `ZID_BASE_API_URL`
+   - `ZID_CLIENT_ID`
+   - `ZID_CLIENT_SECRET`
+   - `MY_BACKEND_URL` (the public URL of this server)
+   - `PORT` (optional, defaults to `3000`)
+3. Start the compiled server:
+   ```bash
+   npm start
+   ```
 
-- ### Update Your application URLs
-  In the third step of the application creation, Zid will ask your for application, Redirect, and Callback URLs.
-  In this sample project the redirect URL will be `{{your_base_URL}}/auth/zid`, and the callback URL will be `{{your_base_URL}}/auth/zid/callback`
-  <br>
-  <br>
-    - The application URL: should be the base URL for your application, where zid will redirect the users to when they want to use your application
-    - Redirect URL: when the users clicks on `install on my store` button, Zid will redirect the user to this URL.
-    - Callback URL: after the user confirms the scopes that your application is asking, he will be redirected to this URL, with the OAuth code.
+## Endpoints
+- `GET /zid/auth/redirect` — Redirects the browser to Zid's authorize page using your client ID.
+- `GET /zid/auth/callback?code=...` — Exchanges the returned `code` for tokens and fetches the merchant profile, responding with JSON so you can wire in your own logic or redirect.
 
-## Deployment notes
-- Build the TypeScript source before starting the server: the `npm start` script now runs `npm run build` and then launches the compiled `dist/server.js` output.
-- On hosts like Render, set the **Start Command** to `npm start` (and the build command to `npm run build` if the host requires one) so the app runs the compiled JavaScript instead of trying to execute the TypeScript entry directly.
+## Files
+- `src/server.ts` — Minimal HTTP server with the redirect and callback handlers.
+- `src/zidService.ts` — Small helper class that performs the Zid API calls using Node's `https` module.
+
+You can replace the JSON response in the callback handler with a redirect to your dashboard or any other app-specific logic.
