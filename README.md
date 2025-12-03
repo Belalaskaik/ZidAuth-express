@@ -23,3 +23,7 @@ In Zid, we use authorization code grant, The authorization code grant type is us
     - The application URL: should be the base URL for your application, where zid will redirect the users to when they want to use your application
     - Redirect URL: when the users clicks on `install on my store` button, Zid will redirect the user to this URL.
     - Callback URL: after the user confirms the scopes that your application is asking, he will be redirected to this URL, with the OAuth code.
+
+## Deployment notes
+- Build the TypeScript source before starting the server: the `npm start` script now runs `npm run build` and then launches the compiled `dist/server.js` output.
+- On hosts like Render, set the **Start Command** to `npm start` (and the build command to `npm run build` if the host requires one) so the app runs the compiled JavaScript instead of trying to execute the TypeScript entry directly.
